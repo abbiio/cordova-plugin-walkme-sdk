@@ -20,6 +20,14 @@
  */
  - (void)restart:(CDVInvokedUrlCommand *)command;
 
+/**
+ * Stop ABBI SDK.
+ *
+ * This method can be called only after ABBI start was called first.
+ * Stop abbi SDK is allowed if old session is at least 1 minute old
+ */
+ - (void)stop:(CDVInvokedUrlCommand *)command;
+
  /**
   * Sends a Goal to ABBI's Backend.
   * A Goal is a user action that can be used to target your users.
@@ -114,5 +122,35 @@
   * [ABBI setUserID:@"myuserid"];
   */
  - (void)setUserID:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Set events that won't be sent
+ *
+ * @param events of type WMStatsEventType that won't be sent
+ *
+ * @code
+ * Usage Example :
+ * [ABBI setEventsFilter:@[@(WMStatsEventTypeInteraction), @(WMStatsEventTypeViewTransition)]];
+ *
+ */
+ - (void)setEventsFilter:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Set ID for a specific screen.
+ * When used, this should be called everytime the screen shows
+ *
+ * @param screenID the ID to set for a specific screen
+ *
+ */
+ - (void)setScreenID:(CDVInvokedUrlCommand *)command;
+
+/**
+ * Set the language for your campaigns.
+ * When used, the language param you pass should match the name of one of the languages you’ve set up in the console.
+ *
+ * @param language the language for which you want the SDK to display your campaigns
+ *
+ */
+ - (void)setLanguage:(CDVInvokedUrlCommand *)command;
 
 @end

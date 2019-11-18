@@ -28,6 +28,11 @@
     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
 }
 
+- (void)stop:(CDVInvokedUrlCommand *)command {
+    [ABBI stop];
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
+}
+
 - (void)sendGoal:(CDVInvokedUrlCommand *)command {
     CDVPluginResult* pluginResult = nil;
     NSInteger argCount = command.arguments.count;
@@ -145,41 +150,80 @@
 }
 
 - (void)trigger:(CDVInvokedUrlCommand *)command {
-    CDVPluginResult* pluginResult = nil;
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     NSInteger argCount = command.arguments.count;
 
-    if (argCount == 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-    }
-    else {
+    if (argCount > 0) {
         NSString *trigger = [command.arguments objectAtIndex:0];
 
-        if (argCount == 1) {
+        if ([trigger isKindOfClass:[NSString class]]) {
             [ABBI trigger:trigger];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
-        else if (argCount == 2) {
-            NSString *deepLink = [command.arguments objectAtIndex:1];
-            [ABBI trigger:trigger withDeepLink:deepLink];
-        }
-
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)setUserID:(CDVInvokedUrlCommand *)command {
-    CDVPluginResult* pluginResult = nil;
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     NSInteger argCount = command.arguments.count;
 
-    if (argCount < 1) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-    }
-    else {
+    if (argCount > 0) {
         NSString *userId = [command.arguments objectAtIndex:0];
 
-        [ABBI setUserID:userId];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        if ([userId isKindOfClass:[NSString class]]) {
+            [ABBI setUserID:userId];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+    }
+
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setEventsFilter:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    NSInteger argCount = command.arguments.count;
+
+    if (argCount > 0) {
+        NSArray<NSNumber *> *events = [command.arguments objectAtIndex:0];
+
+        if ([events isKindOfClass:[NSArray class]]) {
+            [ABBI setEventsFilter:events];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+    }
+
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setScreenID:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    NSInteger argCount = command.arguments.count;
+
+    if (argCount > 0) {
+        NSString *screenID = [command.arguments objectAtIndex:0];
+
+        if ([screenID isKindOfClass:[NSString class]]) {
+            [ABBI setScreenID:screenID];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+    }
+
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setLanguage:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    NSInteger argCount = command.arguments.count;
+
+    if (argCount > 0) {
+        NSString *language = [command.arguments objectAtIndex:0];
+
+        if ([language isKindOfClass:[NSString class]]) {
+            [ABBI setLanguage:language];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];

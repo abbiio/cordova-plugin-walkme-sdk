@@ -31,7 +31,10 @@ public class WalkMeSDK extends CordovaPlugin {
         } else if (action.equals("restart")) {
             this.restart(callbackContext);
             return true;
-        } else if (action.equals("sendGoal")) {
+        } else if (action.equals("stop")) {
+            this.stop(callbackContext);
+            return true;
+         } else if (action.equals("sendGoal")) {
             this.sendGoal(args, callbackContext);
             return true;
         } else if (action.equals("setUserAttribute")) {
@@ -57,6 +60,15 @@ public class WalkMeSDK extends CordovaPlugin {
             return true;
         } else if (action.equals("setUserID")) {
             this.setUserID(args, callbackContext);
+            return true;
+        } else if (action.equals("setEventsFilter")) {
+            this.setEventsFilter(args, callbackContext);
+            return true;
+        } else if (action.equals("setScreenID")) {
+            this.setScreenID(args, callbackContext);
+            return true;
+        } else if (action.equals("setLanguage")) {
+            this.setLanguage(args, callbackContext);
             return true;
         }
 
@@ -84,6 +96,11 @@ public class WalkMeSDK extends CordovaPlugin {
 
     private void restart(CallbackContext callbackContext) {
         ABBI.restart();
+        callbackContext.success();
+    }
+
+    private void stop(CallbackContext callbackContext) {
+        ABBI.stop();
         callbackContext.success();
     }
 
@@ -201,6 +218,50 @@ public class WalkMeSDK extends CordovaPlugin {
 
         String userId = args.optString(0);
         ABBI.setUserId(userId);
+        callbackContext.success();
+    }
+
+    private void setUserID(JSONArray args, CallbackContext callbackContext) {
+        if (args.length() < 1) {
+            callbackContext.error("missing params.");
+            return;
+        }
+
+        String userId = args.optString(0);
+        ABBI.setUserId(userId);
+        callbackContext.success();
+    }
+
+    private void setEventsFilter(JSONArray args, CallbackContext callbackContext) {
+        if (args.length() < 1) {
+            callbackContext.error("missing params.");
+            return;
+        }
+
+        List<String> events = toList(args);
+        ABBI.setEventsFilter(events);
+        callbackContext.success();
+    }
+
+    private void setScreenID(JSONArray args, CallbackContext callbackContext) {
+        if (args.length() < 1) {
+            callbackContext.error("missing params.");
+            return;
+        }
+
+        String screenID = args.optString(0);
+        ABBI.setScreenID(screenID);
+        callbackContext.success();
+    }
+
+    private void setLanguage(JSONArray args, CallbackContext callbackContext) {
+        if (args.length() < 1) {
+            callbackContext.error("missing params.");
+            return;
+        }
+
+        String language = args.optString(0);
+        ABBI.setLanguage(language);
         callbackContext.success();
     }
 
