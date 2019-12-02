@@ -221,24 +221,19 @@ public class WalkMeSDK extends CordovaPlugin {
         callbackContext.success();
     }
 
-    private void setUserID(JSONArray args, CallbackContext callbackContext) {
-        if (args.length() < 1) {
-            callbackContext.error("missing params.");
-            return;
-        }
-
-        String userId = args.optString(0);
-        ABBI.setUserId(userId);
-        callbackContext.success();
-    }
-
     private void setEventsFilter(JSONArray args, CallbackContext callbackContext) {
         if (args.length() < 1) {
             callbackContext.error("missing params.");
             return;
         }
 
-        List<String> events = toList(args);
+        List<String> events = new ArrayList<String>();
+        try {
+          for(int i = 0; i < args.length(); i++){
+              events.add(args.getString(i));
+          }
+        } catch(Exception e) {
+        }
         ABBI.setEventsFilter(events);
         callbackContext.success();
     }
