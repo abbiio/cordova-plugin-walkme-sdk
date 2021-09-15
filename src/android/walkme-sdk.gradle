@@ -1,3 +1,6 @@
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 dependencies {
-    implementation ('abbi.io:abbisdk:+')
+    implementation ('com.github.abbiio:androidsdk:+')
 }
