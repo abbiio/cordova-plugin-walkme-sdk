@@ -9,7 +9,7 @@
       <config>
       </config>
       <pods use-frameworks="true">
-          <pod name="abbi/XCFramework"/>
+          <pod name="abbi"/>
       </pods>
     </podspec>
     <config-file parent="/*" target="config.xml">
