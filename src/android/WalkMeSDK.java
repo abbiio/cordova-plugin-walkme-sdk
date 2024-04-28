@@ -216,7 +216,7 @@ public class WalkMeSDK extends CordovaPlugin {
             return;
         }
 
-        String userId = args.optString(0);
+        String userId = args.isNull(0) ? null : args.optString(0);
         ABBI.setUserId(userId);
         callbackContext.success();
     }
@@ -244,7 +244,7 @@ public class WalkMeSDK extends CordovaPlugin {
             return;
         }
 
-        String screenID = args.optString(0);
+        String screenID = args.isNull(0) ? null : args.optString(0);
         ABBI.setScreenID(screenID);
         callbackContext.success();
     }
